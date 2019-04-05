@@ -25,31 +25,49 @@ function getHighestCommonFactor(a, b) {
   return getHighestCommonFactor(small, remainder)
 }
 
-const a = (deck) => {
-  // 对卡牌进行排序, 并转换为字符串
-  // [1, 3, 4, 1, 4, 3] => 113344
-  const str = deck.sort((a, b) => a-b).join('')
+export default function(deck) {
+  // 如果 deck 仅有一个元素的时候，直接返回 false
+  if (deck.length === 0) {
+    return false
+  }
 
-  // 对卡牌进行分组
-  const regex = /(\d)\1+/g
+  // 对卡牌进行排序, 并转换为字符串
+  // [1, 3, 4, 1, 4, 3] => 1 1 3 3 4 4
+  const str = deck.sort((a, b) => a-b).join(' ')
+
+  // 利用正则表达式将相同数字的卡牌分成一组
+  /// 1 1 3 3 4 4 => ["1 1", "2 2", "3 3", "4 4"]
+  const regex = /(\d+)(\s\1)*/g
   let group = str.match(regex)
 
+  // 将 group 中的元素转换成每组中卡牌的数量
+  // ["1 1", "2 2", "3 3", "4 4"] => [2, 2, 2, 2]
+  let newGroup = []
+  for(let element of group) {
+    const amount = element.split(/\s/).length
+    if (amount === 1) {
+      // 如果发现一组中仅有一张卡牌，直接结束函数
+      return false
+    }
+    newGroup.push(amount)
+  }
+
+  group = newGroup
+  
   while(group.length > 1) {
-    const a = group.shift().length
-    const b = group.shift().length
+    const a = group.shift()
+    const b = group.shift()
     
     // a, b 获取最大公约数
     const highestCommonFactor = getHighestCommonFactor(a, b)
   
     if (highestCommonFactor === 1) {
+      // 如果最大公约数为 1，则表示这这两组卡牌的数量互质，直接退出函数
       return false
     } else {
-      group.unshift(getHighestCommonFactor )
+      group.unshift(highestCommonFactor)
     }
   }
 
+  return true
 }
-
-a([1, 3, 4, 1, 4, 3])
-
-// export default a
