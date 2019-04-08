@@ -1,17 +1,21 @@
 import foo from '.'
 
-test('aa', () => {
+test('example1', () => {
+  expect(foo('aa', 'a')).toBe(false)
+})
+
+test('example2', () => {
   expect(foo('aa', 'a*')).toBe(true)
 })
 
-test('ab', () => {
+test('example3', () => {
   expect(foo('ab', '.*')).toBe(true)
 })
 
-test('ab', () => {
-  expect(foo('', '')).toBe(true)
+test('example4', () => {
+  expect(foo('aab', 'c*a*b')).toBe(true)
 })
 
-test('ab', () => {
-  expect(foo('abc', '')).toBe(false)
+test('mississippi', () => {
+  expect(foo('mississippi', 'mis*is*p*.')).toBe(false)
 })
