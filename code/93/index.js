@@ -13,11 +13,6 @@ var restoreIpAddresses = function (s) {
       }
     }
 
-    // 如果 cur 长度大于 4，但是 sub 中仍然存在字符，则直接退出递归
-    if (cur.length > 4 && sub.length > 0) {
-      return
-    }
-
     // 每一部分的字符串长度最大为 3，但剩余的字符串可能存在小于 3 位的情况
     const len = Math.min(3, sub.length)
     for(let i=0; i < len; i++) {
@@ -27,7 +22,7 @@ var restoreIpAddresses = function (s) {
         // 如果 tmp 开头是 0，并且 tmp 长度大于一，则直接退出递归
         // 对应 010 等 0 开头的直接退出不需要处理，但是得保留 0 这种情况
         if (tmp.startsWith('0') && tmp.length > 1) return
-        
+
         search(cur.concat(tmp), sub.substr(i+1))
       }
     }
