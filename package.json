@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "tsc --watch",
     "commit": "cz",
     "build": "tsc",
     "lint": "eslint",
